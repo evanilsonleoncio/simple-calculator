@@ -92,14 +92,14 @@ lightSwitch.addEventListener(`click`, () => {
 		}, 10);
 
     backgroundTimeoutId = setTimeout(()=> {
-      htmlBackground.classList.add(`active`);
+      htmlBackground.classList.add(`dark`);
     }, 2000);
 	} else {
 		setTimeout(() => {
 			lightSwitch.querySelector(`img`).src = `images/moon.png`;
 		}, 900);
 
-    htmlBackground.classList.remove(`active`);
+    htmlBackground.classList.remove(`dark`);
 	};
 
   localStorage.setItem('darkMode', isDarknessEnabled);
@@ -496,7 +496,7 @@ window.onload = function () {
   } else {
     if (localStorage.getItem(`darkMode`) === `true`) {
       darknessExpansion.classList.toggle(`active`);
-      htmlBackground.classList.add(`active`);
+      htmlBackground.classList.add(`dark`);
     };
 
     const currentColor = localStorage.getItem('calculatorColor');
