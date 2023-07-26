@@ -148,7 +148,7 @@ calculatorButtons.forEach((button) => {
         parenthesesAfter = parenthesesAfter.slice(0, -1);
       } else if (inputedValue) {
         inputedValue = inputedValue.slice(0, -1);
-        currentDisplay.textContent = formatToLocalNumber(inputedValue); console.log(inputedValue);
+        currentDisplay.textContent = formatToLocalNumber(inputedValue);
       };
     } else if (button.id === `parentheses`) {
       if (/^[0-9)$]/.test(inputedValue.charAt(inputedValue.length - 1)) || currentDisplay.textContent.charAt(currentDisplay.textContent.length - 1) === `%`) {
