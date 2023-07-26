@@ -119,15 +119,6 @@ let parenthesesBefore = ``;
 let parenthesesAfter = ``;
 let percentage = ``;
 
-function formatToLocalNumber(value) {
-  const matches = value.match(/\d+/g);
-  let formattedValue = value.replace(/\d+/g, (match) => (+match).toLocaleString());
-
-  formattedValue = formattedValue.replace(/\*/g, '×').replace(/\//g, '÷');
-
-  return formattedValue;
-};
-
 // Handling with the mouse
 calculatorButtons.forEach((button) => {
   button.addEventListener(`mousedown`, () => {
@@ -148,7 +139,7 @@ calculatorButtons.forEach((button) => {
         parenthesesAfter = parenthesesAfter.slice(0, -1);
       } else if (inputedValue) {
         inputedValue = inputedValue.slice(0, -1);
-        currentDisplay.textContent = formatToLocalNumber(inputedValue);
+        currentDisplay.textContent = currentDisplay.textContent.slice(0, -1);
       };
     } else if (button.id === `parentheses`) {
       if (/^[0-9)$]/.test(inputedValue.charAt(inputedValue.length - 1)) || currentDisplay.textContent.charAt(currentDisplay.textContent.length - 1) === `%`) {
@@ -245,7 +236,7 @@ calculatorButtons.forEach((button) => {
 
         try {
           inputedValue = eval(inputedValue);
-          let result = Number(inputedValue.toFixed(10)).toLocaleString(`en`);
+          let result = Number(inputedValue.toFixed(10));
           currentDisplay.textContent = result;
           historyDisplay.textContent += ` = ${result}`;
           historyDisplay.textContent = `${tempExpression} = ${result}`;
@@ -267,7 +258,7 @@ calculatorButtons.forEach((button) => {
 
           try {
             inputedValue = eval(inputedValue);
-            let result = Number(inputedValue.toFixed(10)).toLocaleString(`en`);
+            let result = Number(inputedValue.toFixed(10));
             currentDisplay.textContent = result;
             historyDisplay.textContent = `${tempExpression} = ${result}`;
             deleteHistoryButton.classList.add(`show`);
@@ -286,7 +277,7 @@ calculatorButtons.forEach((button) => {
       };
     } else {
       inputedValue += button.id;
-      currentDisplay.textContent = formatToLocalNumber(inputedValue);
+      currentDisplay.textContent += button.textContent;
       currentDisplay.scrollLeft = currentDisplay.scrollWidth;
     };
   });
@@ -323,7 +314,7 @@ document.addEventListener(`keydown`, (event) => {
       parenthesesAfter = parenthesesAfter.slice(0, -1);
     } else {
       inputedValue = inputedValue.slice(0, -1);
-      currentDisplay.textContent = formatToLocalNumber(inputedValue);
+      currentDisplay.textContent = currentDisplay.textContent.slice(0, -1);
     };
   } else if (pressedKey === `p` || pressedKey === `P`) {
     if (/^[0-9)$]/.test(inputedValue.charAt(inputedValue.length - 1)) || currentDisplay.textContent.charAt(currentDisplay.textContent.length - 1) === `%`) {
@@ -442,7 +433,7 @@ document.addEventListener(`keydown`, (event) => {
 
         try {
           inputedValue = eval(inputedValue);
-          let result = Number(inputedValue.toFixed(10)).toLocaleString(`en`);
+          let result = Number(inputedValue.toFixed(10));
           currentDisplay.textContent = result;
           historyDisplay.textContent = `${tempExpression} = ${result}`;
           deleteHistoryButton.classList.add(`show`);
@@ -461,7 +452,8 @@ document.addEventListener(`keydown`, (event) => {
     };
   } else {
     inputedValue += pressedKey;
-    currentDisplay.textContent = formatToLocalNumber(inputedValue);
+    currentDisplay.textContent += pressedKey.replace(/[*/]/g, (match) => {
+      return match === '*' ? '×' : '÷'});
     currentDisplay.scrollLeft = currentDisplay.scrollWidth;
   };
 
