@@ -468,7 +468,7 @@ document.addEventListener(`keydown`, (event) => {
   };
 });
 
-//
+// This section controls the maintenance of user preferences
 window.onload = function () {
   if (!localStorage.getItem(`cookieConsent`)) {
     const cookieConsentBanner = document.querySelector(`.cookie-banner`);
