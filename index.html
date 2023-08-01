@@ -3,30 +3,31 @@
 	<head>
 		<title>Calculator</title>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0">
 		<link rel="icon" type="images/x-icon" href="images/favicon.ico">
 		<link rel="stylesheet" href="css/style.css">
 	</head>
 	
 	<body>
 		<div class="container">
-			<div class="header">
-				<div></div>
-				<div>
-					<img src="images/pallete.png"></img>
-				</div>
-				<div>
-					<img src="images/moon.png"></img>
-				</div>
+			<div class="header-button darkness-expansion"></div>
+
+			<div class="header-button pallete-button">
+				<img src="images/pallete.png"></img>
+			</div>
+
+			<div class="header-button dark-mode-button">
+				<img src="images/moon.png"></img>
 			</div>
 
 			<div class="calculator">
 				<div class="display">
-					<div class="history">
-						<div class="delete-history">
-							<img src="images/trash.png">
-						</div>
-						<div class="history-screen"></div>
+					<div class="delete-history">
+						<img src="images/trash.png">
 					</div>
+
+					<div class="history"></div>
+
 					<div class="current">
 						<div class="error-message">Invalid Operation</div>
 						<div class="current-screen"></div>
@@ -35,7 +36,7 @@
 
 				<div class="keyboard">
 					<button class="btn" id="clear">C</button>
-					<button class="btn" id="backspace">&laquo;</button>
+					<button class="btn" id="backspace">➜</button>
 					<button class="btn operator" id="%">%</button>
 					<button class="btn operator" id="/">&#247;</button>
 					<button class="btn number" id="7">7</button>
@@ -55,12 +56,6 @@
 					<button class="btn" id="parentheses">( )</button>
 					<button class="btn operator" id="=">=</button>
 				</div>
-			</div>
-
-			<div class="cookie-banner">
-				<p>This site uses cookies only to store your preferences.</p>
-				<p>Don't worry! No personal data is being collected.</p>
-				<button id="cookie-consent">Accept</button>
 			</div>
 
 	<script src="js/script.js"></script>

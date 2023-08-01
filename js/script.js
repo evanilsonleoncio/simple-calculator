@@ -1,6 +1,7 @@
 // This section controls the color change of the calculator
-const palleteButton = document.querySelector(`.header div:nth-child(2)`);
+const palleteButton = document.querySelector(`.container div:nth-child(2)`);
 const calculatorFrame = document.querySelector(`.calculator`);
+const keyboardArea = document.querySelector(`.keyboard`);
 let colorNumber = 1;
 
 function changeColor () {
@@ -70,14 +71,28 @@ function changeColor () {
   return currentColor;
 };
 
+function swipeLeftHandler(event) {
+  if (event.changedTouches[0].clientX - touchStartX < -100) {
+    localStorage.setItem(`calculatorColor`, changeColor());
+  }
+}
+
+keyboardArea.addEventListener("touchstart", function(event) {
+  touchStartX = event.touches[0].clientX;
+});
+
+keyboardArea.addEventListener("touchend", function(event) {
+  swipeLeftHandler(event);
+});
+
 palleteButton.addEventListener(`click`, () => {
   localStorage.setItem(`calculatorColor`, changeColor());
 });
 
 // This section controls enabling/disabling dark mode
 const htmlBackground = document.querySelector(`html`);
-const lightSwitch = document.querySelector(`.header div:nth-child(3)`);
-const darknessExpansion = document.querySelector(`.header div:nth-child(1)`);
+const lightSwitch = document.querySelector(`.container div:nth-child(3)`);
+const darknessExpansion = document.querySelector(`.container div:nth-child(1)`);
 
 let backgroundTimeoutId;
 
@@ -93,7 +108,7 @@ lightSwitch.addEventListener(`click`, () => {
 
     backgroundTimeoutId = setTimeout(()=> {
       htmlBackground.classList.add(`dark`);
-    }, 2000);
+    }, 1000);
 	} else {
 		setTimeout(() => {
 			lightSwitch.querySelector(`img`).src = `images/moon.png`;
@@ -108,7 +123,7 @@ lightSwitch.addEventListener(`click`, () => {
 // This section controls the calculator`s logic
 const calculatorButtons = document.querySelectorAll(`.btn`);
 const deleteHistoryButton = document.querySelector(`.delete-history`);
-const historyDisplay = document.querySelector(`.history-screen`);
+const historyDisplay = document.querySelector(`.history`);
 const errorMessage = document.querySelector(`.error-message`);
 const currentDisplay = document.querySelector(`.current-screen`);
 
@@ -468,26 +483,135 @@ document.addEventListener(`keydown`, (event) => {
   };
 });
 
-// This section controls the maintenance of user preferences
+// This section controls the maintenance of user preference
 window.onload = function () {
   if (!localStorage.getItem(`cookieConsent`)) {
-    const cookieConsentBanner = document.querySelector(`.cookie-banner`);
-    const cookieConsentButton = document.querySelector(`#cookie-consent`);
+    const container = document.querySelector(`.container`);
+    let containerWidth = container.getBoundingClientRect().width;
+    let containerHeight = container.getBoundingClientRect().height;
 
-    cookieConsentBanner.classList.add(`show`);
+    const cookieConsentBanner = document.createElement(`div`);
+    const cookieBannerText = document.createTextNode(`This site uses cookies only to store your preferences. Don't worry! No personal data is being collected.`);
+    const cookieConsentButton = document.createElement(`button`);
+
+    cookieConsentButton.textContent = `Accept`;
+
+    cookieConsentBanner.append(cookieBannerText, cookieConsentButton);
+
+    document.body.appendChild(cookieConsentBanner);
+
+    function forBigScreen () {
+      cookieConsentBanner.style.cssText = `
+        display: grid;
+        grid-template: 65% 35% / 100%;
+        justify-items: center;
+        align-items: center;
+        position: fixed;
+        left: 1rem;
+        bottom: -12rem;
+        width: 24rem;
+        height: 12rem;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 1.5rem;
+        color: rgba(0, 0, 0, 0.68);
+        text-align: center;
+        border: solid 2px rgb(198, 198, 198);
+        background-color: rgb(255, 255, 255);
+        transition: bottom 1.8s;
+      `;
+
+      cookieConsentButton.style.cssText = `
+        width: 10rem;
+        height: 2.8rem;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 1.5rem;
+        color: rgb(255, 255, 255);
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        background-color: rgb(250, 40, 40);
+        transition: width 0.5s, height 0.5s, border-radius 0.5s, background-color 0.5s;
+      `;
+
+      setTimeout(() => {
+        cookieConsentBanner.style.bottom = `1rem`;
+      }, 1000);
+    };
+
+    function forSmallScreen () {
+      cookieConsentBanner.style.cssText = `
+        display: grid;
+        grid-template: 65% 35% / 100%;
+        justify-items: center;
+        align-items: center;
+        position: fixed;
+        bottom: -30vh;
+        width: 100vw;
+        height: 30vh;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 1.5rem;
+        color: rgba(0, 0, 0, 0.68);
+        text-align: center;
+        background-color: rgb(255, 255, 255);
+        transition: bottom 1.8s;
+      `;
+
+      cookieConsentButton.style.cssText = `
+        width: 10rem;
+        height: 2.8rem;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 1.5rem;
+        color: rgb(255, 255, 255);
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        background-color: rgb(250, 40, 40);
+        transition: width 0.5s, height 0.5s, border-radius 0.5s, background-color 0.5s;
+      `;
+
+      setTimeout(() => {
+        cookieConsentBanner.style.bottom = `0`;
+      }, 1000);
+    };
+
+    if (containerWidth > 480) {
+      forBigScreen();
+    } else {
+      forSmallScreen();
+    };
+
+    window.addEventListener(`resize`, () => {
+      if (!localStorage.getItem('cookieConsent')) {
+        containerWidth = container.getBoundingClientRect().width;
+        containerHeight = container.getBoundingClientRect().height
+
+        if (containerWidth > 480) {
+          forBigScreen();
+        } else {
+          forSmallScreen();
+        };
+      };
+    });
 
     cookieConsentButton.addEventListener(`click`, () => {
       localStorage.setItem(`cookieConsent`, true);
-      cookieConsentButton.classList.add(`accepted`);
+      cookieConsentButton.style.width = `2.8rem`;
+      cookieConsentButton.style.borderRadius = `50%`;
+      cookieConsentButton.style.backgroundColor = `rgb(10, 255, 10)`;
       cookieConsentButton.textContent = `√`;
 
       setTimeout(()=> {
-        cookieConsentBanner.classList.remove(`show`);
+        cookieConsentBanner.style.bottom = `-100%`;
       }, 2000);
+
+      setTimeout(()=> {
+        cookieConsentBanner.remove();
+      }, 4000);
     });
   } else {
     if (localStorage.getItem(`darkMode`) === `true`) {
       darknessExpansion.classList.toggle(`active`);
+      lightSwitch.querySelector(`img`).src = `images/sun.png`;
       htmlBackground.classList.add(`dark`);
     };
 

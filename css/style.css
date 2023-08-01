@@ -1,4 +1,4 @@
-/* SECTION import */
+/* SECTION: import */
 @font-face {
 	font-family: Nunito;
 	src: url(../fonts/Nunito-VariableFont_wght.ttf);
@@ -9,14 +9,14 @@
 	src: url(../fonts/JetBrainsMono-VariableFont_wght.ttf);
 }
 
-/* SECTION reset */
+/* SECTION: reset */
 * {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 }
 
-/* SECTION main */
+/* SECTION: main */
 html {
 	overflow: hidden;
 	user-select: none;
@@ -24,47 +24,49 @@ html {
 
 .container {
 	display: grid;
-	grid-template: repeat(2, 6% 94%) / repeat(1, 100%);
 	width: 100vw;
 	height: 100vh;
 }
 
-.header {
-	display: flex;
-	justify-content: end;
-	align-items: end;
-}
-
-.header div {
+.header-button {
 	display: grid;
 	align-items: center;
 	justify-items: center;
+	position: absolute;
+	top: 10px;
 	height: 4.8vh;
 	aspect-ratio: 1 / 1;
-	margin-right: 30px;
 	border-radius: 50%;
 	background-color: rgb(210,210,210);
 	cursor: pointer;
 	transition: transform 0.45s;
 }
 
-.header img {
+.header-button img {
 	height: 2.5vh;
 }
 
-.header div:nth-child(1) {
-	position: absolute;
+.container > div:nth-child(1) {
+	right: 30px;
 	z-index: -2;
 	background-color: rgb(30,30,30);
 	transition: 1s ease;
 	transform: scale(0);
 }
 
+.container > div:nth-child(2) {
+	right: calc(4.8vh + 60px);
+}
+
+.container > div:nth-child(3) {
+	right: 30px;
+}
+
 .calculator {
 	justify-self: center;
 	align-self: center;
 	display: grid;
-	grid-template: repeat(2, 25% 75%) / repeat(1, 100%);
+	grid-template: 25% 75% / 100%;
 	height: 80vh;
 	aspect-ratio: 1 / 1.8;
 	border: solid 1px rgba(255, 255, 255, 0.15);
@@ -74,27 +76,30 @@ html {
 
 .display {
 	display: grid;
-	grid-template: repeat(2, 40% 60%) / repeat(1, 100%);
+	grid-template: 40% 60% / 100%;
+	justify-self: center;
+	align-self: center;
+	width: 92%;
+	height: 84%;
+	font-family: "JetBrains Mono", monospace;
+	border-left: solid 1vh rgb(210, 210, 210);
+	border-right: solid 1vh rgb(210, 210, 210);
+	border-radius: 0.8vh;
+	background-color: rgb(210, 210, 210);
 }
 
 .history {
-	display: flex;
-	font-family: "JetBrains Mono", monospace;
-	justify-self: center;
-	align-self: end;
-	font-size: 2.5vh;
+	display: grid;
+	justify-items: end;
+	font-size: 2.4vh;
 	color: rgba(0, 0, 0, 0.28);
-	width: 92%;
-	height: 78%;
-	border-left: solid 1vh rgb(210, 210, 210);
-	border-right: solid 1vh rgb(210, 210, 210);
-	border-radius: 0.8vh 0.8vh 0 0;
-	padding-top: 0.5%;
+	width: 100%;
+	height: 100%;
+	padding-top: 4%;
 	outline: none;
 	overflow: auto;
 	overflow-y: hidden;
 	white-space: nowrap;
-	background-color: rgb(210, 210, 210);
 }
 
 .history::-webkit-scrollbar {
@@ -110,8 +115,9 @@ html {
 .delete-history {
 	position: fixed;
 	display: none;
+	margin-left: -2px;
 	width: 3.1vh;
-	height: 4.9vh;
+	height: 5.5vh;
 	background-color: rgb(210, 210, 210);
 }
 
@@ -119,39 +125,24 @@ html {
 	justify-self: center;
 	align-self: end;
 	width: 3vh;
-}
-
-.history-screen {
-	text-align: end;
-	line-height: 6.8vh;
-	width: 100%;
-	height: 100%;
+	padding-bottom: 26%;
 }
 
 .current {
-	justify-self: center;
-	align-self: start;
-	width: 92%;
-	height: 90%;
-	font-family: "JetBrains Mono", monospace;
-	border-left: solid 1vh rgb(210, 210, 210);
-	border-right: solid 1vh rgb(210, 210, 210);
-	border-radius: 0 0 0.8vh 0.8vh;
+	display: grid;
 	overflow: auto;
 	overflow-y: hidden;
-	background-color: rgb(210, 210, 210);
 }
 
 .error-message {
-	display: flex;
-	position: relative;
-	justify-content: center;
-	align-items: center;
+	display: grid;
+	justify-self: center;
+	align-content: center;
+	text-align: center;
 	font-size: 1.8vh;
 	color: rgba(0, 0, 0, 0);
-	width: 50%;
-	height: 25%;
-	left: 25%;
+	width: 60%;
+	height: 90%;
 	margin-top: 1%;
 	border-radius: 0.5vh;
 	background-color: rgba(255, 0, 0, 0);
@@ -163,8 +154,8 @@ html {
 	font-size: 4.65vh;
 	color: rgba(0, 0, 0, 0.68);
 	width: 100%;
-	height: 71%;
-	padding-top: 3.5%;
+	height: 100%;
+	padding-top: 2.8%;
 	overflow-y: hidden;
 	outline: none;
 	white-space: nowrap;
@@ -194,7 +185,7 @@ html {
 	font-family: Nunito, Verdana;
 	font-size: 3vh;
 	color: rgba(255, 255, 255, 0.8);
-	width: 80%;
+	width: 8vh;
 	aspect-ratio: 1 / 1;
 	border: none;
 	outline: none;
@@ -207,28 +198,26 @@ html {
 }
 
 #backspace {
-	font-size: 5.5vh;
-	padding-right: 0.28vh;
-	padding-bottom: 0.38vh;
+	transform: rotate(180deg);
 }
 
-/* SECTION animations */
+/* SECTION: animations */
 html.dark {
 	background-color: rgb(30, 30, 30);
 }
 
-.header div:hover {
+.header-button:hover {
 	transform: scale(1.25);
 }
 
-.header div:active {
+.header-button:active {
 	transform: scale(1);
 	transition: transform 0.15s;
 }
 
-.header div:nth-child(1).active {
-	transition: 2s ease-in;
-	transform: scale(1000);
+.container div:nth-child(1).active {
+	transition: 1s ease-in;
+	transform: scale(500);
 }
 
 .history::-webkit-scrollbar-thumb:hover {
@@ -261,7 +250,7 @@ html.dark {
 	background-color: rgba(255, 255, 255, 0);
 }
 
-/* SECTION colors */
+/* SECTION: colors */
 .calculator.color1 {
 	background-color: rgb(125, 0, 0);
 }
@@ -291,54 +280,35 @@ html.dark {
 }
 
 .calculator.color8 {
-	background-color: rgb(200, 160, 0);
+	background-color: rgb(190, 150, 0);
 }
 
 .calculator.color9 {
 	background-color: rgb(0, 170, 160);
 }
 
-/* SECTION cookie consent banner */
-.cookie-banner {
-	display: flex;
-	flex-direction: column;
-	position: fixed;
-	left: 10px;
-	top: 100%;
-	width: 350px;
-	height: 200px;
-	font-family: 'Times New Roman', Times, serif;
-	font-size: 18pt;
-	color: rgba(0, 0, 0, 0.68);
-	text-align: center;
-	padding: 10px;
-	border: solid 2px rgb(198, 198, 198);
-	background-color: rgb(255, 255, 255);
-	transition: top 1.8s;
-}
+/* SECTION: small screens */
+@media (max-width: 480px) {
+	.calculator {
+		height: 100vh;
+		width: 100vw;
+		border: none;
+		border-radius: 0;
+	}
 
-.cookie-banner.show {
-	top: 78.5%;
-}
+	.header-button {
+		display: none;
+	}
 
-.cookie-banner > button {
-	align-self: center;
-	margin-top: 12px;
-	width: 150px;
-	height: 45px;
-	font-family: 'Times New Roman', Times, serif;
-	font-size: 18pt;
-	color: rgb(255, 255, 255);
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	background-color: rgb(250, 40, 40);
-	transition: width 0.35s, height 0.35s, border-radius 0.35s, background-color 0.35s;
-}
+	.display {
+		width: 100%;
+		height: 100%;
+		border-radius: 0;
+	}
 
-.cookie-banner > button.accepted {
-	width: 45px;
-	height: 45px;
-	border-radius: 50%;
-	background-color: rgb(10, 255, 10);
+	.error-message {
+		font-size: 100%;
+		width: 100%;
+		height: 100%;
+	}
 }
