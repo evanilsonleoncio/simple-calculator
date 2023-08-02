@@ -50,8 +50,8 @@ html {
 	right: 30px;
 	z-index: -2;
 	background-color: rgb(30,30,30);
-	transition: 1s ease;
 	transform: scale(0);
+	transition: 1s ease;
 }
 
 .container > div:nth-child(2) {
@@ -63,10 +63,10 @@ html {
 }
 
 .calculator {
-	justify-self: center;
-	align-self: center;
 	display: grid;
 	grid-template: 25% 75% / 100%;
+	justify-self: center;
+	align-self: center;
 	height: 80vh;
 	aspect-ratio: 1 / 1.8;
 	border: solid 1px rgba(255, 255, 255, 0.15);
@@ -81,21 +81,21 @@ html {
 	align-self: center;
 	width: 92%;
 	height: 84%;
-	font-family: "JetBrains Mono", monospace;
 	border-left: solid 1vh rgb(210, 210, 210);
 	border-right: solid 1vh rgb(210, 210, 210);
 	border-radius: 0.8vh;
+	font-family: "JetBrains Mono", monospace;
 	background-color: rgb(210, 210, 210);
 }
 
 .history {
 	display: grid;
 	justify-items: end;
-	font-size: 2.4vh;
-	color: rgba(0, 0, 0, 0.28);
 	width: 100%;
 	height: 100%;
 	padding-top: 4%;
+	font-size: 2.4vh;
+	color: rgba(0, 0, 0, 0.28);
 	overflow: auto;
 	overflow-y: hidden;
 	white-space: nowrap;
@@ -112,11 +112,11 @@ html {
 }
 
 .delete-history {
-	position: absolute;
 	display: none;
-	margin-left: -2px;
+	position: absolute;
 	width: 3.1vh;
 	height: 5.5vh;
+	margin-left: -2px;
 	background-color: rgb(210, 210, 210);
 }
 
@@ -136,25 +136,25 @@ html {
 
 .error-message {
 	display: grid;
-	justify-self: center;
 	justify-content: center;
 	align-content: center;
-	font-size: 1.8vh;
-	color: rgba(0, 0, 0, 0);
+	justify-self: center;
 	width: 60%;
 	height: 100%;
 	border-radius: 0.5vh;
+	font-size: 1.8vh;
+	color: rgba(0, 0, 0, 0);
 	background-color: rgba(255, 0, 0, 0);
 	transition: 1s;
 }
 
 .current-screen {
-	text-align: end;
-	font-size: 4.65vh;
-	color: rgba(0, 0, 0, 0.68);
 	width: 100%;
 	height: 100%;
 	padding-top: 1%;
+	text-align: end;
+	font-size: 4.65vh;
+	color: rgba(0, 0, 0, 0.68);
 	overflow-y: hidden;
 	white-space: nowrap;
 }
@@ -180,14 +180,14 @@ html {
 }
 
 .btn {
-	font-family: Nunito, Verdana;
-	font-size: 3vh;
-	color: rgba(255, 255, 255, 0.8);
 	width: 80%;
 	aspect-ratio: 1 / 1;
 	border: none;
 	outline: none;
 	border-radius: 50%;
+	font-family: Nunito, Verdana;
+	font-size: 3vh;
+	color: rgba(255, 255, 255, 0.8);
 	background-color: rgba(255, 255, 255, 0);
 }
 
@@ -313,8 +313,8 @@ html.dark {
 	}
 
 	.error-message {
-		font-size: 100%;
 		width: 100%;
 		height: 100%;
+		font-size: 100%;
 	}
 }
