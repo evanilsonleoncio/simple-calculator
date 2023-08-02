@@ -259,6 +259,7 @@ calculatorButtons.forEach((button) => {
           inputedValue = inputedValue.toString();
           currentDisplay.scrollLeft = currentDisplay.scrollWidth;
         } catch (e) {
+          errorMessage.textContent = `Invalid Operation`;
           errorMessage.classList.add('show');
 
             setTimeout(() => {
@@ -280,6 +281,7 @@ calculatorButtons.forEach((button) => {
             inputedValue = inputedValue.toString();
             currentDisplay.scrollLeft = currentDisplay.scrollWidth;
           } catch (e) {
+            errorMessage.textContent = `Invalid Operation`;
             errorMessage.classList.add('show');
 
             setTimeout(() => {
@@ -434,6 +436,7 @@ document.addEventListener(`keydown`, (event) => {
         inputedValue = inputedValue.toString();
         currentDisplay.scrollLeft = currentDisplay.scrollWidth;
       } catch (e) {
+        errorMessage.textContent = `Invalid Operation`;
         errorMessage.classList.add('show');
 
           setTimeout(() => {
@@ -455,6 +458,7 @@ document.addEventListener(`keydown`, (event) => {
           inputedValue = inputedValue.toString();
           currentDisplay.scrollLeft = currentDisplay.scrollWidth;
         } catch (e) {
+          errorMessage.textContent = `Invalid Operation`;
           errorMessage.classList.add('show');
 
           setTimeout(() => {
