@@ -112,7 +112,7 @@ html {
 }
 
 .delete-history {
-	position: fixed;
+	position: absolute;
 	display: none;
 	margin-left: -2px;
 	width: 3.1vh;
