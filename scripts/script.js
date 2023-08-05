@@ -492,7 +492,7 @@ window.onload = function () {
   function createInstructingHand(addTime, remTime) {
     const instructingHand = document.createElement(`img`);
 
-    instructingHand.src = `../images/moon.png`;
+    instructingHand.src = `../images/hand.png`;
 
     const styleElement = document.createElement(`style`);
 
