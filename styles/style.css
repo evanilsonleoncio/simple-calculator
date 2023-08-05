@@ -14,6 +14,7 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
+	border: none;
 }
 
 /* SECTION: main */
@@ -54,11 +55,11 @@ html {
 	transition: 1s ease;
 }
 
-.container > div:nth-child(2) {
+.container > button:nth-child(2) {
 	right: calc(4.8vh + 60px);
 }
 
-.container > div:nth-child(3) {
+.container > button:nth-child(3) {
 	right: 30px;
 }
 
@@ -89,12 +90,9 @@ html {
 }
 
 .history {
-	display: grid;
-	justify-items: end;
-	width: 100%;
-	height: 100%;
 	padding-top: 4%;
 	font-size: 2.4vh;
+	text-align: end;
 	color: rgba(0, 0, 0, 0.28);
 	overflow: auto;
 	overflow-y: hidden;
@@ -112,19 +110,17 @@ html {
 }
 
 .delete-history {
-	display: none;
 	position: absolute;
 	width: 3.1vh;
 	height: 5.5vh;
 	margin-left: -2px;
 	background-color: rgb(210, 210, 210);
+	opacity: 0;
 }
 
 .delete-history > img {
-	justify-self: center;
-	align-self: end;
-	width: 3vh;
-	padding-bottom: 26%;
+	width: 100%;
+	margin-top: 55%;
 }
 
 .current {
@@ -134,26 +130,27 @@ html {
 	overflow-y: hidden;
 }
 
-.error-message {
+.error-message-container {
 	display: grid;
-	justify-content: center;
-	align-content: center;
+	opacity: 0;
+	transition: opacity 1.8s ease-in-out;
+}
+
+.error-message-container::before {
+	content: 'Invalid Operation';
 	justify-self: center;
-	width: 60%;
-	height: 100%;
-	border-radius: 0.5vh;
+	align-self: center;
+	padding: 0.5% 4% 0.5% 4%;
+	border-radius: 0.35vh;
 	font-size: 1.8vh;
-	color: rgba(0, 0, 0, 0);
-	background-color: rgba(255, 0, 0, 0);
-	transition: 1s;
+	color: rgba(0, 0, 0, 1);
+	background-color: rgba(255, 0, 0, 0.35);
 }
 
 .current-screen {
-	width: 100%;
-	height: 100%;
-	padding-top: 1%;
-	text-align: end;
+	align-self: end;
 	font-size: 4.65vh;
+	text-align: end;
 	color: rgba(0, 0, 0, 0.68);
 	overflow-y: hidden;
 	white-space: nowrap;
@@ -174,15 +171,12 @@ html {
 	grid-template: repeat(5, 20%) / repeat(4, 25%);
 	justify-items: center;
 	align-items: center;
-	width: 100%;
-	height: 100%;
 	padding: 1.5vh;
 }
 
 .btn {
 	width: 80%;
 	aspect-ratio: 1 / 1;
-	border: none;
 	outline: none;
 	border-radius: 50%;
 	font-family: Nunito, Verdana;
@@ -223,12 +217,11 @@ html.dark {
 }
 
 .delete-history.show {
-	display: grid;
+	opacity: 1;
 }
 
-.error-message.show {
-	color: rgba(0, 0, 0, 0.68);
-	background-color: rgba(255, 0, 0, 0.5);
+.error-message-container.show {
+	opacity: 1;
 }
 
 .current-screen::-webkit-scrollbar-thumb:hover {
@@ -246,6 +239,10 @@ html.dark {
 .operator:hover, #clear:hover, #backspace:hover {
 	border: solid 3px rgba(255, 255, 255, 0.18);
 	background-color: rgba(255, 255, 255, 0);
+}
+
+#backspace:active {
+	transform: rotate(180deg) scale(0.95);
 }
 
 /* SECTION: colors */
@@ -288,7 +285,7 @@ html.dark {
 /* SECTION: small screens */
 @media (max-width: 480px) {
 	html {
-		overflow: scroll;
+		overflow: auto;
 	}
 
 	.container div:nth-child(1).active {
@@ -312,9 +309,7 @@ html.dark {
 		border-radius: 0;
 	}
 
-	.error-message {
-		width: 100%;
-		height: 100%;
+	.error-message-container {
 		font-size: 100%;
 	}
 }

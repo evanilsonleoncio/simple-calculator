@@ -1,5 +1,5 @@
 // This section controls the color change of the calculator
-const palleteButton = document.querySelector(`.container div:nth-child(2)`);
+const palleteButton = document.querySelector(`.container button:nth-child(2)`);
 const calculatorFrame = document.querySelector(`.calculator`);
 const keyboardArea = document.querySelector(`.keyboard`);
 let colorNumber = 1;
@@ -74,14 +74,15 @@ function changeColor () {
 function swipeLeftHandler(event) {
   if (event.changedTouches[0].clientX - touchStartX < -100) {
     localStorage.setItem(`calculatorColor`, changeColor());
+    localStorage.setItem(`instructionFinished`, `true`);
   }
 }
 
-keyboardArea.addEventListener("touchstart", function(event) {
+keyboardArea.addEventListener(`touchstart`, function(event) {
   touchStartX = event.touches[0].clientX;
 });
 
-keyboardArea.addEventListener("touchend", function(event) {
+keyboardArea.addEventListener(`touchend`, function(event) {
   swipeLeftHandler(event);
 });
 
@@ -91,7 +92,7 @@ palleteButton.addEventListener(`click`, () => {
 
 // This section controls enabling/disabling dark mode
 const htmlBackground = document.querySelector(`html`);
-const lightSwitch = document.querySelector(`.container div:nth-child(3)`);
+const lightSwitch = document.querySelector(`.container button:nth-child(3)`);
 const darknessExpansion = document.querySelector(`.container div:nth-child(1)`);
 
 let backgroundTimeoutId;
@@ -117,14 +118,14 @@ lightSwitch.addEventListener(`click`, () => {
     htmlBackground.classList.remove(`dark`);
 	};
 
-  localStorage.setItem('darkMode', isDarknessEnabled);
+  localStorage.setItem(`darkMode`, isDarknessEnabled);
 });
 
 // This section controls the calculator`s logic
 const calculatorButtons = document.querySelectorAll(`.btn`);
 const deleteHistoryButton = document.querySelector(`.delete-history`);
 const historyDisplay = document.querySelector(`.history`);
-const errorMessage = document.querySelector(`.error-message`);
+const errorMessage = document.querySelector(`.error-message-container`);
 const currentDisplay = document.querySelector(`.current-screen`);
 
 let inputedValue = ``;
@@ -188,8 +189,8 @@ calculatorButtons.forEach((button) => {
       currentDisplay.scrollLeft = currentDisplay.scrollWidth;
     } else if (button.id === `=`) {
       if (inputedValue.includes(`%`)) {
-        inputedValue = inputedValue.replace(/%/g, '%#');
-        expression = inputedValue.split('#').filter(Boolean);
+        inputedValue = inputedValue.replace(/%/g, `%#`);
+        expression = inputedValue.split(`#`).filter(Boolean);
         inputedValue = ``;
 
         let operatorForPercentageIndex = ``;
@@ -259,11 +260,10 @@ calculatorButtons.forEach((button) => {
           inputedValue = inputedValue.toString();
           currentDisplay.scrollLeft = currentDisplay.scrollWidth;
         } catch (e) {
-          errorMessage.textContent = `Invalid Operation`;
-          errorMessage.classList.add('show');
+          errorMessage.children.classList.add(`show`);
 
             setTimeout(() => {
-              errorMessage.classList.remove('show');
+              errorMessage.classList.remove(`show`);
             }, 1800);
 
             console.error(e.message);
@@ -281,11 +281,10 @@ calculatorButtons.forEach((button) => {
             inputedValue = inputedValue.toString();
             currentDisplay.scrollLeft = currentDisplay.scrollWidth;
           } catch (e) {
-            errorMessage.textContent = `Invalid Operation`;
-            errorMessage.classList.add('show');
+            errorMessage.classList.add(`show`);
 
             setTimeout(() => {
-              errorMessage.classList.remove('show');
+              errorMessage.classList.remove(`show`);
             }, 1800);
 
             console.error(e.message);
@@ -365,8 +364,8 @@ document.addEventListener(`keydown`, (event) => {
     currentDisplay.scrollLeft = currentDisplay.scrollWidth;
   } else if (pressedKey === `Enter`) {
     if (inputedValue.includes(`%`)) {
-      inputedValue = inputedValue.replace(/%/g, '%#');
-      expression = inputedValue.split('#').filter(Boolean);
+      inputedValue = inputedValue.replace(/%/g, `%#`);
+      expression = inputedValue.split(`#`).filter(Boolean);
       inputedValue = ``;
 
       let operatorForPercentageIndex = ``;
@@ -436,11 +435,10 @@ document.addEventListener(`keydown`, (event) => {
         inputedValue = inputedValue.toString();
         currentDisplay.scrollLeft = currentDisplay.scrollWidth;
       } catch (e) {
-        errorMessage.textContent = `Invalid Operation`;
-        errorMessage.classList.add('show');
+        errorMessage.classList.add(`show`);
 
           setTimeout(() => {
-            errorMessage.classList.remove('show');
+            errorMessage.classList.remove(`show`);
           }, 1800);
 
           console.error(e.message);
@@ -458,11 +456,10 @@ document.addEventListener(`keydown`, (event) => {
           inputedValue = inputedValue.toString();
           currentDisplay.scrollLeft = currentDisplay.scrollWidth;
         } catch (e) {
-          errorMessage.textContent = `Invalid Operation`;
-          errorMessage.classList.add('show');
+          errorMessage.classList.add(`show`);
 
           setTimeout(() => {
-            errorMessage.classList.remove('show');
+            errorMessage.classList.remove(`show`);
           }, 1800);
 
           console.error(e.message);
@@ -472,11 +469,11 @@ document.addEventListener(`keydown`, (event) => {
   } else {
     inputedValue += pressedKey;
     currentDisplay.textContent += pressedKey.replace(/[*/]/g, (match) => {
-      return match === '*' ? '×' : '÷'});
+      return match === `*` ? `×` : `÷`});
     currentDisplay.scrollLeft = currentDisplay.scrollWidth;
   };
 
-  if (event.key === 'Delete' && event.ctrlKey) {
+  if (event.key === `Delete` && event.ctrlKey) {
     historyDisplay.textContent = ``;
     currentDisplay.textContent = ``;
     inputedValue = ``;
@@ -489,11 +486,49 @@ document.addEventListener(`keydown`, (event) => {
 
 // This section controls the maintenance of user preference
 window.onload = function () {
-  if (!localStorage.getItem(`cookieConsent`)) {
-    const container = document.querySelector(`.container`);
-    let containerWidth = container.getBoundingClientRect().width;
-    let containerHeight = container.getBoundingClientRect().height;
+  const container = document.querySelector(`.container`);
+  let containerWidth = container.getBoundingClientRect().width;
 
+  function createInstructingHand(addTime, remTime) {
+    const instructingHand = document.createElement(`img`);
+
+    instructingHand.src = `../images/hand.png`;
+
+    const styleElement = document.createElement(`style`);
+
+    document.body.appendChild(instructingHand);
+    document.head.appendChild(styleElement);
+
+    styleElement.innerHTML = `
+      @keyframes slideLeft {
+        0% {
+            left: 83%;
+            transform: rotate(30deg);
+        }
+        100% {
+            left: 45%;
+        }
+      }
+      
+      .hand-animation {
+        top: 50%;
+        position: absolute;
+        animation: slideLeft 2s ease-in-out 3;
+        width: 8vh;
+      }
+    `;
+
+    setTimeout(()=> {
+      instructingHand.classList.add('hand-animation');
+    }, addTime);
+
+    setTimeout(()=> {
+      instructingHand.remove();
+      styleElement.remove();
+    }, remTime);
+  };
+
+  if (!localStorage.getItem(`cookieConsent`)) {
     const cookieConsentBanner = document.createElement(`div`);
     const cookieBannerText = document.createTextNode(`This site uses cookies only to store your preferences. Don't worry! No personal data is being collected.`);
     const cookieConsentButton = document.createElement(`button`);
@@ -504,7 +539,7 @@ window.onload = function () {
 
     document.body.appendChild(cookieConsentBanner);
 
-    function forBigScreen () {
+    function cookieBannerBigScreen () {
       cookieConsentBanner.style.cssText = `
         display: grid;
         grid-template: 65% 35% / 100%;
@@ -542,7 +577,7 @@ window.onload = function () {
       }, 1000);
     };
 
-    function forSmallScreen () {
+    function cookieBannerSmallScreen () {
       cookieConsentBanner.style.cssText = `
         display: grid;
         grid-template: 65% 35% / 100%;
@@ -579,23 +614,24 @@ window.onload = function () {
     };
 
     if (containerWidth > 480) {
-      forBigScreen();
+      cookieBannerBigScreen();
     } else {
-      forSmallScreen();
+      cookieBannerSmallScreen();
     };
 
+    // Esta função é meramente para fins de análise dos recrutadores. Em um dispositivo móvel real ela não se faz necessária.
     window.addEventListener(`resize`, () => {
-      if (!localStorage.getItem('cookieConsent')) {
+      if (!localStorage.getItem(`cookieConsent`)) {
         containerWidth = container.getBoundingClientRect().width;
-        containerHeight = container.getBoundingClientRect().height
 
         if (containerWidth > 480) {
-          forBigScreen();
+          cookieBannerBigScreen();
         } else {
-          forSmallScreen();
+          cookieBannerSmallScreen();
         };
       };
     });
+    //
 
     cookieConsentButton.addEventListener(`click`, () => {
       localStorage.setItem(`cookieConsent`, true);
@@ -611,15 +647,23 @@ window.onload = function () {
       setTimeout(()=> {
         cookieConsentBanner.remove();
       }, 4000);
+
+      if (containerWidth < 480) {
+        createInstructingHand(4000, 10000);
+      };
     });
   } else {
+    if (containerWidth < 480 && !localStorage.getItem(`instructionFinished`)) {
+      createInstructingHand(2000, 8000);
+    };
+
     if (localStorage.getItem(`darkMode`) === `true`) {
       darknessExpansion.classList.toggle(`active`);
       lightSwitch.querySelector(`img`).src = `images/sun.png`;
       htmlBackground.classList.add(`dark`);
     };
 
-    const currentColor = localStorage.getItem('calculatorColor');
+    const currentColor = localStorage.getItem(`calculatorColor`);
 
     if (currentColor) {
       calculatorFrame.classList.add(currentColor)
